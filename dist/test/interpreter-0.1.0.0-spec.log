@@ -1,0 +1,28 @@
+Test suite spec: RUNNING...
+
+Evaluater
+  evaluate
+    returns 3 for "+ 2 1" FAILED [1]
+    true should be false FAILED [2]
+
+Failures:
+
+  1) Evaluater.evaluate returns 3 for "+ 2 1"
+       uncaught exception: ErrorCall (Prelude.undefined)
+
+     # test/EvaluaterSpec.hs:13 (best-effort)
+
+  2) Evaluater.evaluate true should be false
+       expected: False
+        but got: True
+
+     # test/EvaluaterSpec.hs:16 (best-effort)
+
+Source locations marked with "best-effort" are calculated heuristically and may be incorrect.
+
+Randomized with seed 345329142
+
+Finished in 0.0006 seconds
+2 examples, 2 failures
+Test suite spec: FAIL
+Test suite logged to: dist/test/interpreter-0.1.0.0-spec.log
