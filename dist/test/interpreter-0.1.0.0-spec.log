@@ -28,10 +28,25 @@ Interpreter.Processor
     multiple expressions
       returns 15 for "(* (+ 2 3) (- 7 1 1))"
       returns 15 for "(* (+ 2 3) (- 7 (+ 1 3)))"
-  pullExpression
-    parses the string for a valid expression match
+Interpreter.Repl
+  run
+    exits when user input is exit
+     # PENDING: learn how to test user input
+Interpreter.Validator
+  isValid
+    with valid input
+      returns True with addition operator
+      returns True with subtraction operator
+      returns True with multiplication operator
+      returns True with divizion operator
+      returns True with for nested input
+    with invalid input
+      returns false when no operator is provided
+      returns false when no digits are provided
+      returns false when no operator is provided
+      returns false when expression is empty
 
-Finished in 0.0018 seconds
-18 examples, 0 failures
+Finished in 0.0082 seconds
+27 examples, 0 failures, 1 pending
 Test suite spec: PASS
 Test suite logged to: dist/test/interpreter-0.1.0.0-spec.log

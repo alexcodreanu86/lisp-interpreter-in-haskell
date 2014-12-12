@@ -11,6 +11,10 @@ assertIsValid :: String -> Expectation
 assertIsValid input =
   isValid input `shouldBe` True
 
+assertIsInvalid :: String -> Expectation
+assertIsInvalid input =
+  isValid input `shouldBe` False
+
 spec :: Spec
 spec = do
   describe "isValid" $ do
@@ -19,22 +23,26 @@ spec = do
         assertIsValid "(+ 1 2)"
 
       it "returns True with subtraction operator" $
-        isValid "(- 1 2)" `shouldBe` True
+        assertIsValid "(- 1 2)"
 
       it "returns True with multiplication operator" $
-        isValid "(* 1 2)" `shouldBe` True
+        assertIsValid "(* 1 2)"
 
       it "returns True with divizion operator" $
-        isValid "(/ 1 2)" `shouldBe` True
+        assertIsValid "(/ 1 2)"
 
       it "returns True with for nested input" $
+        assertIsValid "(+ 1 (+ 1 2))"
 
     context "with invalid input" $ do
       it "returns false when no operator is provided" $
-        isValid "(1 2)" `shouldBe` False
+        assertIsInvalid "(1 2)"
 
       it "returns false when no digits are provided" $
-        isValid "(+ )" `shouldBe` False
+        assertIsInvalid "(+ )"
+
+      it "returns false when no operator is provided" $
+        assertIsInvalid "(1 2)"
 
       it "returns false when expression is empty" $
-        isValid "" `shouldBe` False
+        assertIsInvalid ""

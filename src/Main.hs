@@ -1,5 +1,5 @@
 module Main where
-import Interpreter.Repl as Repl
+import Interpreter.Repl (run)
 
 main :: IO ()
-main = Repl.run
+main = run
