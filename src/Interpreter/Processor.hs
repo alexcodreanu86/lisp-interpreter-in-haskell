@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Interpreter.Processor where
+module Interpreter.Processor (process) where
 
 import Text.Regex
 import Interpreter.Evaluator (evaluate)

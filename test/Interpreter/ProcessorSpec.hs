@@ -14,22 +14,26 @@ input `processesTo` output =
 spec :: Spec
 spec = do
   describe "process" $ do
-    it "returns 5 for \"(+ 2 3)\"" $
-      "(+ 2 3)" `processesTo` 5
+    context "simple expression" $ do
+      it "returns 5 for \"(+ 2 3)\"" $
+        "(+ 2 3)" `processesTo` 5
 
-    it "returns 7 for \"(+ 2 (+ 2 3))\"" $
-      "(+ 2 (+ 2 3))" `processesTo` 7
+    context "nested expressoins" $ do
+      it "returns 7 for \"(+ 2 (+ 2 3))\"" $
+        "(+ 2 (+ 2 3))" `processesTo` 7
 
-    it "returns 8 for \"(+ (+ 2 3) 3)\"" $
-      "(+ (+ 2 3) 3)" `processesTo` 8
+      it "returns 8 for \"(+ (+ 2 3) 3)\"" $
+        "(+ (+ 2 3) 3)" `processesTo` 8
 
-    it "returns 2 for \"(- (+ 2 3) 3)\"" $
-      "(- (+ 2 3) 3)" `processesTo` 2
+      it "returns 2 for \"(- (+ 2 3) 3)\"" $
+        "(- (+ 2 3) 3)" `processesTo` 2
 
-    it "returns 15 for \"(* (+ 2 3) 3)\"" $
-      "(* (+ 2 3) 3)" `processesTo` 15
+      it "returns 15 for \"(* (+ 2 3) 3)\"" $
+        "(* (+ 2 3) 3)" `processesTo` 15
 
-  describe "pullExpression" $ do
-    it "parses the string for a valid expression match" $
-      pullExpression "before (+ 1 2 3) after" `shouldBe`
-          Just ("before ", "(+ 1 2 3)", " after", [])
+    context "multiple expressions" $ do
+      it "returns 15 for \"(* (+ 2 3) (- 7 1 1))\"" $
+        "(* (+ 2 3) (- 7 3 1))" `processesTo` 15
+
+      it "returns 15 for \"(* (+ 2 3) (- 7 (+ 1 3)))\"" $
+        "(* (+ 2 3) (- 7 (+ 1 3)))" `processesTo` 15

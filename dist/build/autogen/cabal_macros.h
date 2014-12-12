@@ -14,6 +14,20 @@
   (major1) == 2 && (major2) <  1 || \
   (major1) == 2 && (major2) == 1 && (minor) <= 0)
 
+/* package regex-compat-0.95.1 */
+#define VERSION_regex_compat "0.95.1"
+#define MIN_VERSION_regex_compat(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  95 || \
+  (major1) == 0 && (major2) == 95 && (minor) <= 1)
+
+/* package regex-posix-0.95.2 */
+#define VERSION_regex_posix "0.95.2"
+#define MIN_VERSION_regex_posix(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  95 || \
+  (major1) == 0 && (major2) == 95 && (minor) <= 2)
+
 /* tool alex-3.1.3 */
 #define TOOL_VERSION_alex "3.1.3"
 #define MIN_TOOL_VERSION_alex(major1,major2,minor) (\

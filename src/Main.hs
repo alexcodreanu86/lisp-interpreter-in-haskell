@@ -1,4 +1,5 @@
 module Main where
+import Interpreter.Repl as Repl
 
 main :: IO ()
-main = putStrLn "hello world"
+main = Repl.run

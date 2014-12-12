@@ -16,7 +16,7 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Evaluater
+  exposed-modules:     Interpreter.Evaluator, Interpreter.Processor, Main
   -- other-modules:       
   other-extensions:    OverloadedStrings, DeriveGeneric
   build-depends:       base >=4.7 && <4.8, regex-compat, regex-posix, hspec >=2.1 && <2.2
