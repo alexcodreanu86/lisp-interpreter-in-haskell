@@ -9,40 +9,81 @@ main = hspec spec
 
 assertIsValid :: String -> Expectation
 assertIsValid input =
-  isValid input `shouldBe` True
+  isValidExpression input `shouldBe` True
 
 assertIsInvalid :: String -> Expectation
 assertIsInvalid input =
-  isValid input `shouldBe` False
+  isValidExpression input `shouldBe` False
 
 spec :: Spec
 spec = do
-  describe "isValid" $ do
-    context "with valid input" $ do
-      it "returns True with addition operator" $
+  describe "isValidInput" $ do
+    context "returns True" $ do
+      it "when input is a number" $
+        isValidInput "123" `shouldBe` True
+
+      it "when input looks like an expression" $
+        isValidInput "(1 2 3)" `shouldBe` True
+
+    context "returns False" $ do
+      it "when expression is not a number" $
+        isValidInput "hello" `shouldBe` False
+
+      it "when it contains invalid characters" $
+        isValidInput "Ω" `shouldBe` False
+
+      it "when expression is not formated correctly" $ do
+        isValidInput "1 2 (+ 12 3)" `shouldBe` False
+        isValidInput "(+ 1 2) 1 2 3" `shouldBe` False
+
+  describe "isNumber" $ do
+    context "returns True" $ do
+      it "when input is a floating number" $
+        isNumber "1.2" `shouldBe` True
+
+      it "when input is an integer" $
+        isNumber "12" `shouldBe` True
+
+    context "returns False" $ do
+      it "when input is NOT a number" $
+        isNumber "test" `shouldBe` False
+
+      it "when contains text and digits at the end" $
+        isNumber "test number 3.3" `shouldBe` False
+
+      it "when contains digits in the begining and text at the end" $
+        isNumber "3.3 test number" `shouldBe` False
+
+  describe "isValidExpresion" $ do
+    context "returns True" $ do
+      it "with addition operator" $
         assertIsValid "(+ 1 2)"
 
-      it "returns True with subtraction operator" $
+      it "with subtraction operator" $
         assertIsValid "(- 1 2)"
 
-      it "returns True with multiplication operator" $
+      it "with multiplication operator" $
         assertIsValid "(* 1 2)"
 
-      it "returns True with divizion operator" $
+      it "with divizion operator" $
         assertIsValid "(/ 1 2)"
 
-      it "returns True with for nested input" $
+      it "with for nested input" $
         assertIsValid "(+ 1 (+ 1 2))"
 
-    context "with invalid input" $ do
-      it "returns false when no operator is provided" $
+      it "with tabs inside an expression" $
+        assertIsValid "(+ 1 2 \t 4)"
+
+    context "returns False" $ do
+      it "when no operator is provided" $
         assertIsInvalid "(1 2)"
 
-      it "returns false when no digits are provided" $
+      it "when no digits are provided" $
         assertIsInvalid "(+ )"
 
-      it "returns false when no operator is provided" $
+      it "when no operator is provided" $
         assertIsInvalid "(1 2)"
 
-      it "returns false when expression is empty" $
+      it "when expression is empty" $
         assertIsInvalid ""
+

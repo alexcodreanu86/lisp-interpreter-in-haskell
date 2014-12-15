@@ -5,10 +5,22 @@ import Interpreter.Processor
 
 run :: IO()
 run = do
-  putStr "\n lisp: > "
+  putStrLn "Starting Repl....."
+  putStrLn "Repl ready!"
+  runRepl
+
+runRepl :: IO()
+runRepl = do
+  putStrLn "lisp: >"
+  getUserInput
+
+getUserInput :: IO()
+getUserInput = do
   input <- getLine
-  if input == "exit"
-     then putStrLn "Thanks for trying this little program"
-     else do
-       putStrLn $ "\n" ++ show (process input)
-       run
+  processInput input
+
+processInput ::String -> IO()
+processInput "exit" = putStrLn "\nThanks for trying this little program"
+processInput input = do
+  putStrLn $ "=> " ++ process input
+  runRepl

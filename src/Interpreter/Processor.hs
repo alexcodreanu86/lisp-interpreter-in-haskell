@@ -1,28 +1,44 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Interpreter.Processor (process) where
+module Interpreter.Processor (process, evaluateExpression) where
 
-import Text.Regex
-import Interpreter.Evaluator (evaluate)
+import Text.Regex.Posix
+import Interpreter.Evaluator as Evaluator
+import Interpreter.OutputFormater as Formater
+import Interpreter.Validator as Validator
 
-process :: String -> Float
-process input =
+process :: String -> String
+process input
+  | Validator.isValidInput input =
+    Formater.formatOutput $ evaluateInput input
+  | otherwise = processMatch input $ Just ("", "", "")
+
+evaluateInput :: String -> String
+evaluateInput input =
   processMatch input $ pullExpression input
 
-processMatch :: String -> Maybe (String, String, String, [String]) -> Float
-processMatch input Nothing = read input
-processMatch _ (Just (before, match, after, _)) = do
-  let result = before ++ (evaluateExpression match) ++ after
-    in process result
+processMatch :: String -> Maybe (String, String, String) -> String
+processMatch input Nothing = input
+processMatch input (Just (before, match, after))
+  | isValidExpression match =
+    let result = before ++ evaluateExpression match ++ after
+      in evaluateInput result
+  | otherwise = "Invalid expression: " ++ (show input)
 
 evaluateExpression :: String -> String
 evaluateExpression input =
-  show $ evaluate (strip input :: String)
+  show (Evaluator.evaluate (removeParens input :: String))
 
-strip :: String -> String
-strip (_:input) = init input
+removeParens :: String -> String
+removeParens (_:input) = init input
+removeParens input = input
 
-pullExpression :: String -> Maybe (String, String, String, [String])
-pullExpression input = matchRegexAll expressionRegex input
+pullExpression :: String -> Maybe (String, String, String)
+pullExpression input
+  | matchExpression input = Just (input  =~ expressionMatch :: (String, String, String))
+  | otherwise = Nothing
 
-expressionRegex :: Regex
-expressionRegex = (mkRegex "\\([^\\(\\)]+\\)")
+matchExpression :: String -> Bool
+matchExpression = (=~ expressionMatch)
+
+expressionMatch :: String
+expressionMatch = "\\([^\\(\\)]+\\)"

@@ -28,6 +28,13 @@
   (major1) == 0 && (major2) <  95 || \
   (major1) == 0 && (major2) == 95 && (minor) <= 2)
 
+/* package text-1.1.0.0 */
+#define VERSION_text "1.1.0.0"
+#define MIN_VERSION_text(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  1 || \
+  (major1) == 1 && (major2) == 1 && (minor) <= 0)
+
 /* tool alex-3.1.3 */
 #define TOOL_VERSION_alex "3.1.3"
 #define MIN_TOOL_VERSION_alex(major1,major2,minor) (\
